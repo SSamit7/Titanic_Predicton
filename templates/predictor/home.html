@@ -1,0 +1,85 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071522">
+  <title>Titanic — Survival Predictor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="ocean" aria-hidden="true">
+    <div class="moon"></div><div class="stars"></div>
+    <div class="horizon"></div><div class="wave wave-one"></div><div class="wave wave-two"></div>
+    <div class="ship"><div class="ship-body"></div><div class="ship-deck"></div><div class="funnel"></div></div>
+  </div>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">T</span><span>THE ATLANTIC <small>1912 · PASSENGER ARCHIVE</small></span></a>
+    <span class="top-note"><i></i> MACHINE LEARNING EXPERIMENT</span>
+  </header>
+
+  <main class="page-shell">
+    <section class="intro">
+      <p class="eyebrow">A JOURNEY INTO HISTORY</p>
+      <h1>Would you survive<br><em>the Titanic?</em></h1>
+      <p class="intro-copy">Step aboard. Enter your passenger details and let the model explore what might have happened on that fateful night.</p>
+      <div class="rule"><span></span> RMS TITANIC · APRIL 1912 <span></span></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">PASSENGER MANIFEST</p><h2>Your details</h2></div>
+        <span class="manifest-number">NO. 001</span>
+      </div>
+      <form id="passenger-form">
+        {% csrf_token %}
+        <div class="form-grid">
+          <label>Passenger class
+            <select name="Pclass" required><option value="1">1st Class</option><option value="2">2nd Class</option><option value="3" selected>3rd Class</option></select>
+          </label>
+          <label>Sex
+            <select name="Sex" required><option value="male">Male</option><option value="female">Female</option></select>
+          </label>
+          <label>Age <span class="hint">years</span>
+            <input name="Age" type="number" min="0" max="100" step="0.5" placeholder="e.g. 24" required>
+          </label>
+          <label>Ticket fare <span class="hint">£</span>
+            <input name="Fare" type="number" min="0" max="1000" step="0.01" placeholder="e.g. 32.50" required>
+          </label>
+          <label>Siblings / spouse aboard
+            <input name="SibSp" type="number" min="0" max="10" value="0" required>
+          </label>
+          <label>Parents / children aboard
+            <input name="Parch" type="number" min="0" max="10" value="0" required>
+          </label>
+          <label class="full">Port of embarkation
+            <select name="Embarked" required><option value="S">Southampton (S)</option><option value="C">Cherbourg (C)</option><option value="Q">Queenstown (Q)</option></select>
+          </label>
+        </div>
+        <button class="submit-button" id="submit-button" type="submit"><span>Discover your fate</span><b>→</b></button>
+        <p class="form-footnote">Your details are used only to generate this prediction.</p>
+      </form>
+      <div class="error-message" id="error-message" role="alert"></div>
+    </section>
+    <footer>AN EDUCATIONAL MACHINE LEARNING PROJECT <span>·</span> NOT A HISTORICAL CERTAINTY</footer>
+  </main>
+
+  <section class="result-overlay" id="result-overlay" aria-live="polite" aria-modal="true" role="dialog" hidden>
+    <div class="result-card" id="result-card">
+      <div class="result-symbol" id="result-symbol"></div>
+      <p class="eyebrow" id="result-eyebrow">THE VERDICT</p>
+      <h2 id="result-title"></h2>
+      <p class="result-message" id="result-message"></p>
+      <div class="score-wrap" id="score-wrap" hidden><span>MODEL SURVIVAL SCORE</span><strong id="score"></strong></div>
+      <p class="disclaimer">This is a prediction from your trained model, not a guarantee or a statement about what would certainly have happened.</p>
+      <button class="again-button" id="again-button" type="button">Try another passenger <span>↗</span></button>
+    </div>
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+  </section>
+  <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>
