@@ -1,7 +1,14 @@
+
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = "replace-this-with-a-long-random-secret-before-deployment"
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    "local-development-only-key"
+)
+
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
@@ -33,6 +40,12 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Asia/Kathmandu"
 USE_I18N = True
 USE_TZ = True
-STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+# Static files
+STATIC_URL = "/static/"
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
