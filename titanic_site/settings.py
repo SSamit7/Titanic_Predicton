@@ -3,7 +3,12 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "replace-this-with-a-long-random-secret-before-deployment"
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "titanic-predicton.vercel.app",
+    ".vercel.app",
+]
 
 INSTALLED_APPS = [
     "django.contrib.contenttypes",
